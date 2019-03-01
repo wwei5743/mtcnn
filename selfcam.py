@@ -16,6 +16,7 @@ while True:
     result = detector.detect_faces(frame)
     if result != []:
         for person in result:
+            print(person)
             bounding_box = person['box']
             keypoints = person['keypoints']
     
@@ -30,6 +31,9 @@ while True:
             cv2.circle(frame,(keypoints['nose']), 2, (0,155,255), 2)
             cv2.circle(frame,(keypoints['mouth_left']), 2, (0,155,255), 2)
             cv2.circle(frame,(keypoints['mouth_right']), 2, (0,155,255), 2)
+            for feature in keypoints.keys():
+                cv2.putText(frame,'({}, {})'.format(keypoints[feature][0], keypoints[feature][1]),\
+                    (keypoints[feature][0], keypoints[feature][1]+5), cv2.FONT_HERSHEY_PLAIN, 0.5, (0,155,255) )
     #display resulting frame
     cv2.imshow('frame',frame)
     if cv2.waitKey(1) &0xFF == ord('q'):
